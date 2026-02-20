@@ -152,6 +152,7 @@ local function getSingleHitDamage(attacker, target, dmg, ftp, wsParams, calcPara
     -- check shadows
     if
         not calcParams.guaranteedHit and
+        not wsParams.ignoreShadows and
         shadowAbsorb(target)
     then
         -- shadow absorb logic
@@ -312,10 +313,9 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
     end
 
     -- Calculate critrates
-    -- TODO: calc per-hit with weapon crit+% on each hand (if dual wielding)
     calcParams.critRate = 0
     if wsParams.critVaries then -- Work out critical hit ratios
-        calcParams.critRate = xi.combat.physical.calculateSwingCriticalRate(attacker, target, tp, wsParams.critVaries)
+        calcParams.critRate = xi.combat.physical.calculateSwingCriticalRate(attacker, target, tp, calcParams.attackInfo.slot, wsParams.critVaries)
     end
 
     -- Start the WS
@@ -542,6 +542,10 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
     if calcParams.extraOffhandHit then
         calcParams.attackInfo.slot       = xi.slot.SUB
         calcParams.attackInfo.weaponType = offhandSkill
+
+        if wsParams.critVaries then -- Update crit rate if this applies
+            calcParams.critRate = xi.combat.physical.calculateSwingCriticalRate(attacker, target, tp, calcParams.attackInfo.slot, wsParams.critVaries)
+        end
     end
 
     -- Recalculate hitRate with offhand acc
@@ -775,6 +779,8 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
 
     -- Delete statuses that may have been spent by the WS
     attacker:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
+    attacker:delStatusEffect(xi.effect.FLASHY_SHOT)
+    attacker:delStatusEffect(xi.effect.STEALTH_SHOT)
 
     -- Calculate reductions
     finaldmg = target:rangedDmgTaken(finaldmg)
@@ -939,6 +945,7 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
     elseif wsResults.shadowsAbsorbed > 0 then
         action:messageID(defender:getID(), xi.msg.basic.SHADOW_ABSORB)
         action:param(defender:getID(), wsResults.shadowsAbsorbed)
+        action:resolution(defender:getID(), xi.action.resolution.MISS)
     else
         if primaryMsg then
             action:messageID(defender:getID(), xi.msg.basic.SKILL_MISS)

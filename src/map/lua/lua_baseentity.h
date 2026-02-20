@@ -176,7 +176,7 @@ public:
     auto sendGuild(uint16 guildId, uint8 open, uint8 close, uint8 holiday) const -> bool; // Sends guild shop menu
     void openSendBox() const;                                                             // Opens send box (to deliver items)
     void leaveGame();
-    void sendEmote(const CLuaBaseEntity* target, uint8 emID, uint8 emMode) const;
+    void sendEmote(const CLuaBaseEntity* target, uint8 emID, uint8 emMode, bool othersOnly) const;
 
     // Location and Positioning
     int16 getWorldAngle(sol::variadic_args va);                                                // return angle (rot) between two points (vector from a to b), aligned to absolute cardinal degree
@@ -666,7 +666,7 @@ public:
     void  lowerEnmity(CLuaBaseEntity* PEntity, uint8 percent);
     void  updateEnmity(CLuaBaseEntity* PEntity);
     void  transferEnmity(CLuaBaseEntity* entity, uint8 percent, float range);
-    void  updateEnmityFromDamage(CLuaBaseEntity* PEntity, int32 damage); // Adds Enmity to player for specified mob for the damage specified
+    void  updateEnmityFromDamage(CLuaBaseEntity* PEntity, int32 damage) const; // Adds Enmity to player for specified mob for the damage specified
     void  updateEnmityFromCure(CLuaBaseEntity* PEntity, int32 amount, const sol::object& fixedCE, const sol::object& fixedVE);
     void  resetEnmity(CLuaBaseEntity* PEntity);
     void  setEnmityActive(CLuaBaseEntity* PEntity, bool active);
@@ -704,6 +704,7 @@ public:
     void  delMod(uint16 modID, int16 value);
     void  printAllMods();
     int16 getMaxGearMod(Mod modId);
+    int16 getGearModFromSlot(uint8 slot, Mod modId);
 
     void addLatent(uint16 condID, uint16 conditionValue, uint16 mID, int16 modValue);
     bool delLatent(uint16 condID, uint16 conditionValue, uint16 mID, int16 modValue);
@@ -851,12 +852,12 @@ public:
 
     void setNpcFlags(uint32 flags);
 
-    void   spawn(const sol::object& despawnSec, const sol::object& respawnSec);
-    bool   isSpawned();
-    auto   getSpawnPos() -> sol::table;
-    void   setSpawn(float x, float y, float z, const sol::object& rot);
-    uint32 getRespawnTime();
-    void   setRespawnTime(uint32 seconds) const;
+    void spawn(const sol::object& despawnSec, const sol::object& respawnSec);
+    bool isSpawned();
+    auto getSpawnPos() -> sol::table;
+    void setSpawn(float x, float y, float z, const sol::object& rot);
+    auto getRespawnTime() const -> uint32;
+    void setRespawnTime(uint32 seconds) const;
 
     void instantiateMob(uint32 groupID);
 

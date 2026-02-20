@@ -24,6 +24,7 @@
 
 #include "aman.h"
 #include "event_info.h"
+#include "gmcall_container.h"
 #include "item_container.h"
 #include "map_session.h"
 #include "monstrosity.h"
@@ -539,6 +540,8 @@ public:
     // The character is in ANY Mog House (their own or someone else's)
     auto inMogHouse() const -> bool;
 
+    auto gmCallContainer() -> GMCallContainer&;
+
     CharHistory_t m_charHistory{};
 
     int8  getShieldSize();
@@ -651,7 +654,7 @@ public:
     virtual void           OnDeathTimer() override;
     virtual void           OnRaise() override;
 
-    virtual void OnItemFinish(CItemState&, action_t&);
+    virtual auto OnItemFinish(CItemState&, action_t&) -> bool;
 
     auto getCharVar(const std::string& varName) const -> int32;
     auto getCharVarsWithPrefix(const std::string& prefix) -> std::vector<std::pair<std::string, int32>>;
@@ -677,6 +680,7 @@ protected:
 private:
     // Lazily initialized AMAN data
     xi::optional<CAMANContainer> m_AMAN;
+    GMCallContainer              gmCallContainer_;
 
     std::unique_ptr<CItemContainer> m_Inventory;
     std::unique_ptr<CItemContainer> m_Mogsafe;
