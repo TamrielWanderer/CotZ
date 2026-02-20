@@ -38,3 +38,11 @@
 
 custom/commands/
 custom/lua/test_npcs_in_gm_home.lua
+
+# Single-player focused modules
+custom/lua/homepoint_heal.lua
+custom/lua/conquest_regional_npcs_always_up.lua
+custom/lua/soa_remove_imprimatur_gate.lua
+custom/lua/wotg_decouple_story_missions_from_nation_quests.lua
+custom/lua/mission_wardrobe_unlocks.lua
+custom/lua/solo_starter_trusts.lua

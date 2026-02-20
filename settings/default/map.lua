@@ -62,8 +62,8 @@ xi.settings.map =
     ENMITY_CAP = 30000,
 
     -- Misc EXP related settings
-    EXP_RATE                = 1.0,
-    EXP_LOSS_RATE           = 1.0,
+    EXP_RATE                = 2.0,  -- 2x EXP for solo-friendly progression
+    EXP_LOSS_RATE           = 0.0,  -- no EXP loss on death
     EXP_PARTY_GAP_PENALTIES = true,
 
     -- A party member's experience points are nullified if the level difference with the highest-level party member exceeds this value.
@@ -84,7 +84,7 @@ xi.settings.map =
     FAME_MULTIPLIER = 1.00,
 
     -- Percentage of experience normally lost to keep upon death. 0 means full loss, where 1 means no loss.
-    EXP_RETAIN = 0,
+    EXP_RETAIN = 1,  -- retain all EXP on death (no death penalty)
 
     -- Minimum level at which experience points can be lost
     EXP_LOSS_LEVEL = 31,
@@ -132,12 +132,12 @@ xi.settings.map =
     MOB_RUN_SPEED_MULTIPLIER = 2.5,
 
     -- Allows you to manipulate the constant multiplier in the skill-up rate formulas, having a potent effect on skill-up rates.
-    SKILLUP_CHANCE_MULTIPLIER = 1.0,
-    CRAFT_CHANCE_MULTIPLIER   = 1.0,
+    SKILLUP_CHANCE_MULTIPLIER = 2.0,  -- faster skill-ups for solo play
+    CRAFT_CHANCE_MULTIPLIER   = 2.0,  -- faster craft skill-ups for solo play
 
     -- Multiplier for skillup amounts. Using anything above 1 will break the 0.5 cap, the cap will become 0.9 (For maximum, set to 5)
-    SKILLUP_AMOUNT_MULTIPLIER = 1,
-    CRAFT_AMOUNT_MULTIPLIER   = 1,
+    SKILLUP_AMOUNT_MULTIPLIER = 2,    -- higher skill-up amounts for solo play
+    CRAFT_AMOUNT_MULTIPLIER   = 2,    -- higher craft skill-up amounts for solo play
 
     -- Gardening Factors. DO NOT change defaults without verifiable proof that your change IS how retail does it. Myths need to be optional.
     GARDEN_DAY_MATTERS       = false,
@@ -215,10 +215,10 @@ xi.settings.map =
     BLOOD_PACT_SHARED_TIMER = false,
 
     -- Adjust mob drop rate. Acts as a multiplier, so default is 1.
-    DROP_RATE_MULTIPLIER = 1.0,
+    DROP_RATE_MULTIPLIER = 2.0,  -- doubled drop rate for solo farming
 
     -- Multiplier for gil naturally dropped by mobs. Does not apply to the bonus gil from all_mobs_gil_bonus. Default is 1.0.
-    MOB_GIL_MULTIPLIER = 1.0,
+    MOB_GIL_MULTIPLIER = 2.0,   -- doubled gil drops for solo economy
 
     -- All mobs drop this much extra gil per mob LV even if they normally drop zero.
     ALL_MOBS_GIL_BONUS = 0,
